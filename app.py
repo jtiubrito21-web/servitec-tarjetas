@@ -6,7 +6,7 @@ from io import BytesIO
 import qrcode
 
 app = Flask(__name__)
-app.secret_key = "CAMBIAR-ESTA-CLAVE-12345"
+app.secret_key = "servitec-2026-clave-segura-987654321"
 
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "data.db"
@@ -650,6 +650,9 @@ def vista_publica(punto):
     """
     return render_page(punto, body, punto=punto, data=data, total_tarjetas=total_tarjetas, pendiente=pendiente)
 
+init_db()
+
 if __name__ == "__main__":
-    init_db()
-    app.run(debug=False)
+    import os
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=False)
