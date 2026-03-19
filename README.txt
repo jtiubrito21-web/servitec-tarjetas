@@ -1,51 +1,24 @@
+SERVITEC TARJETAS - VERSION PERSISTENTE
 
-SISTEMA SERVITEC - TARJETAS DE INTERNET
+NUEVO
+- Base persistente con PostgreSQL usando DATABASE_URL
+- Vista mejorada para telefonos
+- Editar registros
+- Eliminar registros
 
-INICIO RÁPIDO
+LOCAL
+1. pip install -r requirements.txt
+2. python app.py
+3. abrir http://127.0.0.1:5000
 
-1. Descomprime el archivo ZIP.
-2. Abre la carpeta.
-3. En la barra de dirección de la carpeta escribe: cmd
-4. En la ventana negra ejecuta:
+RENDER
+1. Crear una base PostgreSQL en Render
+2. Copiar la External Database URL
+3. En el Web Service > Environment:
+   DATABASE_URL = pegar la URL
+   SECRET_KEY = una clave larga
+4. Deploy nuevamente
 
-pip install -r requirements.txt
-
-5. Luego ejecuta:
-
-python app.py
-
-6. Abre en tu navegador:
-
-http://127.0.0.1:5000
-
-DATOS DE INGRESO
+LOGIN
 Usuario: admin
 Contraseña: 1234
-
-PUNTOS DE VENTA CONFIGURADOS
-- Seño Manuela
-- Jacinta Terraza
-- Don Martín
-- Ana Pastor
-- Isabela Pastor
-- Marta Bernal
-- Jacinto Raymundo
-- Doña María
-- Punto 9
-- Punto 10
-
-CAMBIAR CONTRASEÑA
-Abre el archivo app.py y busca estas líneas:
-
-USUARIO_ADMIN = "admin"
-CLAVE_ADMIN = "1234"
-
-Puedes cambiar la contraseña allí.
-
-SUBIR A INTERNET
-Cuando quieras subirlo a Render:
-Build Command:
-pip install -r requirements.txt
-
-Start Command:
-gunicorn app:app
