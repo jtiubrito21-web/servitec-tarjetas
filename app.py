@@ -71,7 +71,7 @@ def logged():
 
 @app.route("/")
 def inicio():
-    return redirect(url_for("login"))
+    return redirect(url_for("nuevo"))
  
 @app.route("/login", methods=["GET","POST"])
 def login():
