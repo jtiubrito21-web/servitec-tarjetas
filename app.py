@@ -17,7 +17,7 @@ db = SQLAlchemy(app)
 
 PUNTOS = ["Seño Manuela","Jacinta Terraza","Don Martín","Ana Pastor","Isabela Pastor","Marta Bernal","Jacinto Raymundo","Doña María","Punto 9","Punto 10"]
 USUARIO_ADMIN = os.environ.get("ADMIN_USER", "admin")
-CLAVE_ADMIN = os.environ.get("ADMIN_PASSWORD", "JT123")
+CLAVE_ADMIN = os.environ.get("ADMIN_PASSWORD", "1234")
 
 class Registro(db.Model):
     id = db.Column(db.Integer, primary_key=True)
