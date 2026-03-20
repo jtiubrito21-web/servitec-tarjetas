@@ -68,26 +68,11 @@ def render_page(titulo, body, mostrar_menu=True, **context):
 def logged():
     return session.get("user") == USUARIO_ADMIN
 
+
 @app.route("/")
 def inicio():
-    if not logged(): return redirect(url_for("login"))
-    total_registros = Registro.query.count()
-    total_tarjetas = db.session.query(db.func.coalesce(db.func.sum(Registro.cantidad), 0)).scalar()
-    total_pendiente = db.session.query(db.func.coalesce(db.func.sum(Registro.total), 0)).filter(Registro.estado=="Pendiente").scalar()
-    ultimos = Registro.query.order_by(Registro.id.desc()).limit(8).all()
-    body = """
-    <div class="two"><div class="card"><h2>Panel principal</h2><p class="muted">Sistema con base persistente y administración de registros.</p>
-    <div class="stats"><div class="stat"><div class="muted">Registros</div><div class="n">{{ total_registros }}</div></div>
-    <div class="stat"><div class="muted">Tarjetas entregadas</div><div class="n">{{ total_tarjetas }}</div></div>
-    <div class="stat"><div class="muted">Saldo pendiente</div><div class="n">Q {{ '%.2f'|format(total_pendiente or 0) }}</div></div></div></div>
-    <div class="card"><h2>Acceso rápido</h2><div class="nav"><a class="btn" href="{{ url_for('nuevo') }}">Registrar paquete</a><a class="btn dark" href="{{ url_for('registros') }}">Ver historial</a><a class="btn dark" href="{{ url_for('puntos') }}">Ver QR</a></div><p class="small muted" style="margin-top:14px;">Usuario: <b>admin</b><br>Contraseña: <b>1234</b></p></div></div>
-    <div class="card"><h2>Últimos registros</h2><div class="desktop-table table-wrap"><table><thead><tr><th>Fecha</th><th>Punto</th><th>Cantidad</th><th>Plan</th><th>Total</th><th>Pago</th></tr></thead><tbody>
-    {% for r in ultimos %}<tr><td>{{ r.fecha }}</td><td>{{ r.punto }}</td><td>{{ r.cantidad }}</td><td>{{ r.plan }}</td><td>Q {{ '%.2f'|format(r.total) }}</td><td>{% if r.estado == 'Cancelado' %}<span class="badge ok">Cancelado</span>{% else %}<span class="badge pending">Pendiente</span>{% endif %}</td></tr>{% endfor %}
-    {% if not ultimos %}<tr><td colspan="6" class="muted">No hay registros todavía.</td></tr>{% endif %}</tbody></table></div>
-    <div class="mobile-cards">{% for r in ultimos %}<div class="record-card"><div class="field"><b>Fecha:</b> {{ r.fecha }}</div><div class="field"><b>Punto:</b> {{ r.punto }}</div><div class="field"><b>Cantidad:</b> {{ r.cantidad }}</div><div class="field"><b>Plan:</b> {{ r.plan }}</div><div class="field"><b>Total:</b> Q {{ '%.2f'|format(r.total) }}</div><div class="field"><b>Pago:</b> {% if r.estado == 'Cancelado' %}<span class="badge ok">Cancelado</span>{% else %}<span class="badge pending">Pendiente</span>{% endif %}</div></div>{% endfor %}</div></div>
-    """
-    return render_page("Inicio", body, total_registros=total_registros, total_tarjetas=total_tarjetas, total_pendiente=total_pendiente, ultimos=ultimos)
-
+    return redirect("/registrar")
+ 
 @app.route("/login", methods=["GET","POST"])
 def login():
     if request.method == "POST":
